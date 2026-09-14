@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "Member": {
+      "title": "Member",
+      "description": "Anggota dan Pengurus Team Senyap Nusantara",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID Anggota misal TSN-00125" },
+        "name": { "type": "string", "description": "Nama lengkap anggota" },
+        "division": { "type": "string", "description": "Divisi organisasi" },
+        "membershipType": { "type": "string", "description": "Kategori keanggotaan" },
+        "region": { "type": "string", "description": "Wilayah atau cabang" },
+        "joinDate": { "type": "string", "description": "Tanggal bergabung" },
+        "status": { "type": "string", "description": "Status keanggotaan" },
+        "photoUrl": { "type": "string", "description": "Foto profil KTA" },
+        "ktpUrl": { "type": "string", "description": "Foto dokumen KTP" },
+        "phone": { "type": "string", "description": "Nomor WhatsApp/HP" },
+        "email": { "type": "string", "description": "Alamat email" },
+        "nik": { "type": "string", "description": "Nomor Induk Kependudukan (NIK)" },
+        "address": { "type": "string", "description": "Alamat domisili" },
+        "signatureUrl": { "type": "string", "description": "Tanda tangan digital" },
+        "reason": { "type": "string", "description": "Alasan atau motivasi bergabung" },
+        "verifiedBy": { "type": "string", "description": "Pengurus yang memverifikasi" },
+        "verifiedAt": { "type": "string", "description": "Waktu verifikasi" },
+        "createdAt": { "type": "string", "description": "Waktu pembuatan record" }
+      },
+      "required": ["id", "name", "division", "region", "status"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Catatan Kas Masuk dan Keluar Organisasi",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID Transaksi" },
+        "date": { "type": "string", "description": "Tanggal transaksi" },
+        "type": { "type": "string", "description": "Tipe pemasukan atau pengeluaran" },
+        "category": { "type": "string", "description": "Kategori transaksi" },
+        "amount": { "type": "number", "description": "Nominal dalam Rupiah" },
+        "description": { "type": "string", "description": "Keterangan transaksi" },
+        "recordedBy": { "type": "string", "description": "Pencatat transaksi" }
+      },
+      "required": ["id", "date", "type", "category", "amount", "description"]
+    },
+    "LegalAidCase": {
+      "title": "LegalAidCase",
+      "description": "Permohonan Bantuan Hukum Posko LPKSM TSN",
+      "type": "object",
+      "properties": {
+        "ticketNumber": { "type": "string", "description": "Nomor tiket pengaduan" },
+        "applicantName": { "type": "string", "description": "Nama pemohon" },
+        "phone": { "type": "string", "description": "Nomor kontak pemohon" },
+        "category": { "type": "string", "description": "Kategori perkara hukum" },
+        "location": { "type": "string", "description": "Lokasi kejadian perkara" },
+        "description": { "type": "string", "description": "Uraian kronologi kasus" },
+        "status": { "type": "string", "description": "Status tindak lanjut" },
+        "submittedAt": { "type": "string", "description": "Waktu pengajuan" }
+      },
+      "required": ["ticketNumber", "applicantName", "phone", "category", "description", "status"]
+    },
+    "SiteConfig": {
+      "title": "SiteConfig",
+      "description": "Konfigurasi identitas organisasi Team Senyap Nusantara",
+      "type": "object",
+      "properties": {
+        "orgName": { "type": "string", "description": "Nama Organisasi" },
+        "subTitle": { "type": "string", "description": "Sub-judul / Naungan LPKSM" },
+        "heroHeadline": { "type": "string", "description": "Headline banner utama" },
+        "heroTagline": { "type": "string", "description": "Slogan" },
+        "phoneHotline": { "type": "string", "description": "Nomor kontak hotline" },
+        "whatsappNumber": { "type": "string", "description": "Nomor WhatsApp resmi" },
+        "email": { "type": "string", "description": "Email resmi" },
+        "address": { "type": "string", "description": "Alamat kantor pusat" },
+        "legalNumber": { "type": "string", "description": "Nomor SK Kemenkumham / LPKSM" }
+      }
+    }
+  },
+  "firestore": {
+    "/members/{memberId}": {
+      "schema": "Member",
+      "description": "Koleksi data anggota dan verifikasi KTA Team Senyap Nusantara"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Koleksi arus kas organisasi"
+    },
+    "/legalAidCases/{caseId}": {
+      "schema": "LegalAidCase",
+      "description": "Koleksi permohonan bantuan hukum masyarakat"
+    },
+    "/settings/{configId}": {
+      "schema": "SiteConfig",
+      "description": "Pengaturan informasi situs dan posko TSN"
+    }
+  }
+}

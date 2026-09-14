@@ -1,0 +1,8 @@
+{
+  "name": "Team Senyap Nusantara",
+  "description": "Official Website and Member Portal for Team Senyap Nusantara (TSN) - Social, Humanitarian, and Legal Aid Organization.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
