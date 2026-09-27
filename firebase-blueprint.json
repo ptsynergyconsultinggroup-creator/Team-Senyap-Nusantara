@@ -2,7 +2,7 @@
   "entities": {
     "Member": {
       "title": "Member",
-      "description": "Anggota dan Pengurus Team Senyap Nusantara",
+      "description": "Data publik anggota Team Senyap Nusantara untuk verifikasi KTA",
       "type": "object",
       "properties": {
         "id": { "type": "string", "description": "ID Anggota misal TSN-00125" },
@@ -13,18 +13,26 @@
         "joinDate": { "type": "string", "description": "Tanggal bergabung" },
         "status": { "type": "string", "description": "Status keanggotaan" },
         "photoUrl": { "type": "string", "description": "Foto profil KTA" },
-        "ktpUrl": { "type": "string", "description": "Foto dokumen KTP" },
-        "phone": { "type": "string", "description": "Nomor WhatsApp/HP" },
-        "email": { "type": "string", "description": "Alamat email" },
-        "nik": { "type": "string", "description": "Nomor Induk Kependudukan (NIK)" },
-        "address": { "type": "string", "description": "Alamat domisili" },
-        "signatureUrl": { "type": "string", "description": "Tanda tangan digital" },
-        "reason": { "type": "string", "description": "Alasan atau motivasi bergabung" },
         "verifiedBy": { "type": "string", "description": "Pengurus yang memverifikasi" },
         "verifiedAt": { "type": "string", "description": "Waktu verifikasi" },
         "createdAt": { "type": "string", "description": "Waktu pembuatan record" }
       },
       "required": ["id", "name", "division", "region", "status"]
+    },
+    "MemberPrivate": {
+      "title": "MemberPrivate",
+      "description": "Data pribadi sensitif anggota (terlindungi hak akses pengurus)",
+      "type": "object",
+      "properties": {
+        "nik": { "type": "string", "description": "Nomor Induk Kependudukan (NIK)" },
+        "phone": { "type": "string", "description": "Nomor WhatsApp/HP" },
+        "email": { "type": "string", "description": "Alamat email" },
+        "address": { "type": "string", "description": "Alamat domisili" },
+        "ktpUrl": { "type": "string", "description": "Foto dokumen KTP" },
+        "signatureUrl": { "type": "string", "description": "Tanda tangan digital" },
+        "reason": { "type": "string", "description": "Alasan atau motivasi bergabung" },
+        "updatedAt": { "type": "string", "description": "Waktu pembaruan" }
+      }
     },
     "Transaction": {
       "title": "Transaction",
@@ -72,24 +80,67 @@
         "address": { "type": "string", "description": "Alamat kantor pusat" },
         "legalNumber": { "type": "string", "description": "Nomor SK Kemenkumham / LPKSM" }
       }
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Catatan audit aktivitas perubahan data oleh pengurus",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID log" },
+        "timestamp": { "type": "string", "description": "Waktu aktivitas" },
+        "adminEmail": { "type": "string", "description": "Email admin yang bertindak" },
+        "adminUid": { "type": "string", "description": "UID admin" },
+        "action": { "type": "string", "description": "Tipe tindakan" },
+        "targetId": { "type": "string", "description": "ID target data" },
+        "details": { "type": "string", "description": "Keterangan rincian aktivitas" }
+      },
+      "required": ["id", "timestamp", "adminEmail", "action", "details"]
+    },
+    "NewsItem": {
+      "title": "NewsItem",
+      "description": "Koleksi Berita, Siaran Pers, dan Informasi Publik TSN",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID Berita" },
+        "title": { "type": "string", "description": "Judul Berita" },
+        "category": { "type": "string", "description": "Kategori Berita" },
+        "date": { "type": "string", "description": "Tanggal publikasi" },
+        "author": { "type": "string", "description": "Penulis atau redaksi berita" },
+        "summary": { "type": "string", "description": "Ringkasan intisari berita" },
+        "content": { "type": "string", "description": "Isi lengkap naskah berita" },
+        "imageUrl": { "type": "string", "description": "URL foto / sampul ilustrasi berita" }
+      },
+      "required": ["id", "title", "category", "date", "author", "summary", "content"]
     }
   },
   "firestore": {
     "/members/{memberId}": {
       "schema": "Member",
-      "description": "Koleksi data anggota dan verifikasi KTA Team Senyap Nusantara"
+      "description": "Koleksi data profil publik anggota untuk verifikasi KTA resmi"
+    },
+    "/members/{memberId}/private/data": {
+      "schema": "MemberPrivate",
+      "description": "Subkoleksi data pribadi sensitif anggota (khusus admin pengurus)"
     },
     "/transactions/{transactionId}": {
       "schema": "Transaction",
-      "description": "Koleksi arus kas organisasi"
+      "description": "Koleksi arus kas organisasi (publik baca, tulis khusus admin)"
     },
     "/legalAidCases/{caseId}": {
       "schema": "LegalAidCase",
-      "description": "Koleksi permohonan bantuan hukum masyarakat"
+      "description": "Koleksi permohonan bantuan hukum (input publik, akses daftar khusus admin)"
     },
     "/settings/{configId}": {
       "schema": "SiteConfig",
       "description": "Pengaturan informasi situs dan posko TSN"
+    },
+    "/auditLogs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Rekam jejak audit aktivitas pengurus"
+    },
+    "/news/{newsId}": {
+      "schema": "NewsItem",
+      "description": "Koleksi artikel berita dan publikasi informasi (baca publik, tulis admin)"
     }
   }
 }

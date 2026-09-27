@@ -1,4 +1,4 @@
-import { Transaction, SiteConfig } from '../types';
+import { Transaction, SiteConfig, Member, Vehicle } from '../types';
 
 export const exportFinancialToExcel = (transactions: Transaction[], siteConfig?: SiteConfig) => {
   const orgName = siteConfig?.orgName || 'TEAM SENYAP NUSANTARA';
@@ -125,3 +125,159 @@ export const exportFinancialToExcel = (transactions: Transaction[], siteConfig?:
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 };
+
+export const exportMembersToExcel = (members: Member[], siteConfig?: SiteConfig) => {
+  const orgName = siteConfig?.orgName || 'TEAM SENYAP NUSANTARA';
+  const subTitle = siteConfig?.subTitle || 'LPKSM SENYAP NUSANTARA JAYA';
+  const todayStr = new Date().toLocaleDateString('id-ID', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const htmlContent = `
+    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+    <head>
+      <meta charset="utf-8">
+      <style>
+        body { font-family: Arial, sans-serif; margin: 20px; color: #0f172a; }
+        .org-title { font-size: 16pt; font-weight: bold; color: #09090b; text-align: center; }
+        .org-subtitle { font-size: 12pt; font-weight: bold; color: #b45309; text-align: center; }
+        .meta-text { font-size: 9pt; color: #64748b; text-align: center; margin-bottom: 20px; }
+        .main-table { width: 100%; border-collapse: collapse; }
+        .main-table th { background-color: #1e293b; color: #ffffff; padding: 10px; border: 1px solid #334155; font-size: 10pt; text-align: left; }
+        .main-table td { padding: 8px 10px; border: 1px solid #cbd5e1; font-size: 9.5pt; }
+        .status-active { color: #15803d; font-weight: bold; }
+        .status-pending { color: #b45309; font-weight: bold; }
+      </style>
+    </head>
+    <body>
+      <div class="org-title">${orgName.toUpperCase()}</div>
+      <div class="org-subtitle">${subTitle.toUpperCase()} — DAFTAR ANGGOTA & PENGURUS</div>
+      <div class="meta-text">Tanggal Ekspor: ${todayStr} | Total Anggota: ${members.length} Orang</div>
+      <table class="main-table">
+        <thead>
+          <tr>
+            <th>No ID Anggota</th>
+            <th>Nama Lengkap</th>
+            <th>Divisi</th>
+            <th>Kategori Keanggotaan</th>
+            <th>Wilayah Cabang</th>
+            <th>Tanggal Gabung</th>
+            <th>Status</th>
+            <th>Verifikator</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${members
+            .map(
+              (m) => `
+            <tr>
+              <td style="font-weight: bold;">${m.id}</td>
+              <td>${m.name}</td>
+              <td>${m.division}</td>
+              <td>${m.membershipType || 'Anggota Biasa'}</td>
+              <td>${m.region}</td>
+              <td>${m.joinDate}</td>
+              <td class="${m.status === 'Aktif' || m.status === 'Terverifikasi' ? 'status-active' : 'status-pending'}">${m.status}</td>
+              <td>${m.verifiedBy || '-'}</td>
+            </tr>
+          `
+            )
+            .join('')}
+        </tbody>
+      </table>
+    </body>
+    </html>
+  `;
+
+  const blob = new Blob([htmlContent], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Data_Anggota_LPKSM_TSN_${new Date().toISOString().slice(0, 10)}.xls`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+export const exportVehiclesToExcel = (vehicles: Vehicle[], siteConfig?: SiteConfig) => {
+  const orgName = siteConfig?.orgName || 'TEAM SENYAP NUSANTARA';
+  const todayStr = new Date().toLocaleDateString('id-ID', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const htmlContent = `
+    <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+    <head>
+      <meta charset="utf-8">
+      <style>
+        body { font-family: Arial, sans-serif; margin: 20px; color: #0f172a; }
+        .org-title { font-size: 16pt; font-weight: bold; color: #09090b; text-align: center; }
+        .org-subtitle { font-size: 12pt; font-weight: bold; color: #b45309; text-align: center; }
+        .meta-text { font-size: 9pt; color: #64748b; text-align: center; margin-bottom: 20px; }
+        .main-table { width: 100%; border-collapse: collapse; }
+        .main-table th { background-color: #1e293b; color: #ffffff; padding: 10px; border: 1px solid #334155; font-size: 10pt; text-align: left; }
+        .main-table td { padding: 8px 10px; border: 1px solid #cbd5e1; font-size: 9.5pt; }
+      </style>
+    </head>
+    <body>
+      <div class="org-title">${orgName.toUpperCase()}</div>
+      <div class="org-subtitle">MASTER DATA KENDARAAN ANGGOTA & LOGISTIK OPERASIONAL</div>
+      <div class="meta-text">Tanggal Ekspor: ${todayStr} | Total Unit Terdaftar: ${vehicles.length} Kendaraan</div>
+      <table class="main-table">
+        <thead>
+          <tr>
+            <th>No. Plat Polisi</th>
+            <th>ID Anggota Pemilik</th>
+            <th>Nama Pemilik</th>
+            <th>Jenis Kendaraan</th>
+            <th>Merk / Tipe</th>
+            <th>Tahun</th>
+            <th>Warna</th>
+            <th>Status Stiker TSN</th>
+            <th>No. Seri Stiker</th>
+            <th>Keterangan Operasional</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${vehicles
+            .map(
+              (v) => `
+            <tr>
+              <td style="font-weight: bold;">${v.licensePlate}</td>
+              <td>${v.memberId}</td>
+              <td>${v.memberName}</td>
+              <td>${v.vehicleType}</td>
+              <td>${v.brandModel}</td>
+              <td>${v.year}</td>
+              <td>${v.color}</td>
+              <td>${v.stickerStatus}</td>
+              <td>${v.stickerNumber || '-'}</td>
+              <td>${v.notes || '-'}</td>
+            </tr>
+          `
+            )
+            .join('')}
+        </tbody>
+      </table>
+    </body>
+    </html>
+  `;
+
+  const blob = new Blob([htmlContent], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Data_Kendaraan_TSN_${new Date().toISOString().slice(0, 10)}.xls`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+

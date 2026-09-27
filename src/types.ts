@@ -6,25 +6,57 @@ export type MembershipType =
   | 'Anggota Kehormatan';
 
 export interface Member {
-  id: string; // e.g. TSN-00125
+  id: string; // Format resmi: KODE_WILAYAH-TAHUN_BERGABUNG-NOMOR_URUT (e.g. 35.09-2026-0016)
   name: string;
-  division: 'Sosial' | 'Kemanusiaan' | 'Bantuan Hukum' | 'Humas & Kerjasama' | 'Pengawas' | 'Bendahara';
+  division?: 'Sosial' | 'Kemanusiaan' | 'Bantuan Hukum' | 'Humas & Kerjasama' | 'Pengawas' | 'Bendahara' | string;
+  position?: 'Ketua' | 'Sekretaris' | 'Bendahara' | 'Pengawas' | 'Humas' | 'Tim Hukum' | 'Anggota' | string;
   membershipType?: MembershipType;
-  region: string; // e.g. Kantor Pusat Jember, Jakarta, Surabaya
+  region: string; // e.g. Jawa Timur, Kantor Pusat Jember
   joinDate: string;
-  status: 'Aktif' | 'Terverifikasi' | 'Menunggu Verifikasi' | 'Pengurus' | 'Nonaktif';
+  joinYear?: string;
+  validUntil?: string; // e.g. "30 Desember 2027"
+  status: 'Aktif' | 'Nonaktif' | 'Menunggu Verifikasi' | 'Ditangguhkan' | 'Berakhir' | 'Arsip' | 'Pengurus' | 'Terverifikasi';
   photoUrl: string;
   ktpUrl?: string; // Foto KTP / Dokumen Identitas
   ktpUploadedAt?: string;
   phone?: string;
   email?: string;
   nik?: string;
+  birthPlace?: string;
+  birthDate?: string;
+  gender?: 'Laki-laki' | 'Perempuan';
+  religion?: string;
   address?: string;
+  village?: string; // Desa / Kelurahan
+  district?: string; // Kecamatan
+  regency?: string; // Kabupaten / Kota
+  province?: string; // Provinsi
   signatureUrl?: string;
   reason?: string;
   qrCodeValue?: string;
   verifiedBy?: string;
   verifiedAt?: string;
+  notes?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface Vehicle {
+  id: string; // auto id or formatted plate
+  licensePlate: string; // e.g. "P 1234 AB"
+  memberId: string; // Linked directly to Member ID e.g. "35.09-2026-0016"
+  memberName: string;
+  vehicleType: 'Mobil' | 'Motor' | 'Truk Logistik TRC' | 'Ambulans Kemanusiaan' | 'Lainnya';
+  brandModel: string; // e.g. "Toyota Avanza", "Honda Vario"
+  year: string; // e.g. "2023"
+  color: string; // e.g. "Hitam Metalik"
+  chassisNumber?: string; // No. Rangka (sensitif / opsional)
+  engineNumber?: string; // No. Mesin (sensitif / opsional)
+  stickerStatus: 'Diterbitkan & Tertempel' | 'Dalam Proses Cetak' | 'Belum Didaftarkan' | 'Dicabut';
+  stickerNumber?: string; // No. Seri Stiker TSN (e.g. "TSN-STK-0016")
+  notes?: string;
+  createdAt: string;
+  updatedAt?: string;
 }
 
 export interface Program {
@@ -123,6 +155,49 @@ export interface Transaction {
   recordedBy: string; // e.g. "Ibrahim (Bendahara)"
 }
 
+export interface MemberPrivate {
+  nik?: string;
+  phone?: string;
+  email?: string;
+  address?: string;
+  ktpUrl?: string;
+  signatureUrl?: string;
+  reason?: string;
+  updatedAt?: string;
+}
+
+export interface AuditLog {
+  id: string;
+  timestamp: string; // ISO string
+  adminEmail: string;
+  adminUid: string;
+  action:
+    | 'VERIFY_MEMBER'
+    | 'REJECT_MEMBER'
+    | 'UPDATE_MEMBER'
+    | 'DELETE_MEMBER'
+    | 'ADD_TRANSACTION'
+    | 'DELETE_TRANSACTION'
+    | 'UPDATE_CONFIG'
+    | 'UPDATE_LEGAL_AID'
+    | 'PUBLISH_NEWS'
+    | 'UPDATE_NEWS'
+    | 'DELETE_NEWS'
+    | 'ADD_VEHICLE'
+    | 'UPDATE_VEHICLE'
+    | 'DELETE_VEHICLE';
+  targetId: string;
+  details: string;
+}
+
+export interface AdminProfile {
+  uid: string;
+  email: string;
+  displayName?: string;
+  role: 'superadmin' | 'admin' | 'verifikator';
+  createdAt?: string;
+}
+
 export interface SiteConfig {
   logoUrl?: string;
   logoType?: 'svg' | 'image' | 'both';
@@ -149,7 +224,5 @@ export interface SiteConfig {
   aboutText1: string;
   aboutText2: string;
   bankAccountInfo: string;
-  adminUsername?: string;
-  adminPin?: string;
 }
 

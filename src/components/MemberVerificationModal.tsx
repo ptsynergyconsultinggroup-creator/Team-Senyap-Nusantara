@@ -56,8 +56,7 @@ export const MemberVerificationModal: React.FC<MemberVerificationModalProps> = (
         const match = members.find(
           (m) =>
             m.id.toLowerCase() === query ||
-            m.name.toLowerCase().includes(query) ||
-            (m.nik && m.nik.includes(query))
+            m.name.toLowerCase().includes(query)
         );
         if (match) {
           setSearchQuery(match.id);
@@ -98,8 +97,7 @@ export const MemberVerificationModal: React.FC<MemberVerificationModalProps> = (
     const match = members.find(
       (m) =>
         m.id.toLowerCase() === query ||
-        m.name.toLowerCase() === query ||
-        (m.nik && m.nik === query)
+        m.name.toLowerCase() === query
     );
 
     if (match) {

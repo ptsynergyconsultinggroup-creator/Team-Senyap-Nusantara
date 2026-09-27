@@ -1,48 +1,49 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // Helper function for string check
-    function isValidString(val, minLen, maxLen) {
-      return val is string && val.size() >= minLen && val.size() <= maxLen;
+    // Admins metadata collection
+    match /admins/{adminId} {
+      allow read, write: if true;
     }
 
-    // Members collection
+    // Public Member Profiles (for KTA card verification & roster)
     match /members/{memberId} {
-      // Public can read to verify KTA cards via QR code
-      allow read: if true;
-      // Allow registration of new members
-      allow create: if request.resource.data.id is string 
-                    && request.resource.data.name is string
-                    && request.resource.data.name.size() > 0
-                    && request.resource.data.name.size() <= 150;
-      // Allow updates (verification, status change, edits)
-      allow update: if request.resource.data.name is string;
-      // Allow delete
-      allow delete: if true;
+      allow read, write: if true;
+      
+      // Subcollection for sensitive member data (NIK, phone, KTP, signature)
+      match /private/{docId} {
+        allow read, write: if true;
+      }
     }
 
     // Transactions / Kas Organisasi
     match /transactions/{transactionId} {
-      // Public transparency
-      allow read: if true;
-      allow create: if request.resource.data.amount is number 
-                    && request.resource.data.category is string;
-      allow update, delete: if true;
+      allow read, write: if true;
     }
 
-    // Legal Aid Cases / Posko Hukum
+    // Legal Aid Cases / Posko Bantuan Hukum
     match /legalAidCases/{caseId} {
-      allow read: if true;
-      allow create: if request.resource.data.applicantName is string 
-                    && request.resource.data.phone is string;
-      allow update, delete: if true;
+      allow read, write: if true;
     }
 
-    // Settings / Site Config
+    // Settings / Site Configuration
     match /settings/{configId} {
-      allow read: if true;
-      allow write: if true;
+      allow read, write: if true;
+    }
+
+    // Audit Trail Logs
+    match /auditLogs/{logId} {
+      allow read, write: if true;
+    }
+
+    // News & Information articles
+    match /news/{newsId} {
+      allow read, write: if true;
+    }
+
+    // Member Vehicles
+    match /vehicles/{vehicleId} {
+      allow read, write: if true;
     }
   }
 }

@@ -20,7 +20,7 @@ import {
   FileCheck2,
   Lock,
 } from 'lucide-react';
-import { saveLegalAidCase, getLegalAidCase } from '../services/dbService';
+import { saveLegalAidCase, getLegalAidCase } from '../services';
 
 interface LegalAidRequestModalProps {
   isOpen: boolean;

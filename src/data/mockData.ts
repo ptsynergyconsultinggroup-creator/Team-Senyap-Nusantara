@@ -1,6 +1,33 @@
-import { Member, Program, NewsItem, Transaction } from '../types';
+import { Member, Program, NewsItem, Transaction, LegalAidCase } from '../types';
 
 export const initialMembers: Member[] = [
+  {
+    id: '35.09-2026-0016',
+    name: 'M. Very Ardiyansyah',
+    position: 'Anggota',
+    division: 'Sosial',
+    membershipType: 'Anggota Biasa',
+    region: 'Jawa Timur',
+    joinDate: '15 Januari 2026',
+    joinYear: '2026',
+    validUntil: '30 Desember 2027',
+    status: 'Aktif',
+    photoUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=400',
+    phone: 'BELUM DIINPUT',
+    email: 'BELUM DIINPUT',
+    nik: 'BELUM DIINPUT',
+    birthPlace: 'BELUM DIINPUT',
+    birthDate: 'BELUM DIINPUT',
+    gender: 'Laki-laki',
+    address: 'BELUM DIINPUT',
+    village: 'BELUM DIINPUT',
+    district: 'BELUM DIINPUT',
+    regency: 'Jember',
+    province: 'Jawa Timur',
+    verifiedBy: 'IBRAHIM (Bendahara Pusat)',
+    verifiedAt: '15 Januari 2026',
+    notes: 'Data anggota terverifikasi resmi SK Pengurus TSN 2026',
+  },
   {
     id: 'TSN-00125',
     name: 'IBRAHIM',
@@ -12,7 +39,7 @@ export const initialMembers: Member[] = [
     photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400',
     phone: '0823-3262-6916',
     email: 'ibrahim@teamsenyapnusantara.org',
-    nik: '3509111201950001',
+    nik: '3509************',
     reason: 'Pengabdian penuh untuk kemajuan LPKSM & bantuan sosial masyarakat Jember.'
   },
   {
@@ -24,9 +51,9 @@ export const initialMembers: Member[] = [
     joinDate: '15 Maret 2021',
     status: 'Pengurus',
     photoUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400',
-    phone: '+62 813-8899-7711',
+    phone: '0823-3262-6916',
     email: 'heri.prabowo@teamsenyapnusantara.org',
-    nik: '3578021503880002',
+    nik: '3578************',
     reason: 'Memperjuangkan keadilan hukum pro bono bagi warga terzalimi.'
   },
   {
@@ -38,9 +65,9 @@ export const initialMembers: Member[] = [
     joinDate: '08 Agustus 2022',
     status: 'Aktif',
     photoUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400',
-    phone: '+62 815-4433-2211',
+    phone: '0823-3262-6916',
     email: 'siti.rahmawati@teamsenyapnusantara.org',
-    nik: '3273014808940003',
+    nik: '3273************',
     reason: 'Aktif dalam pertolongan kebencanaan dan logistik kemanusiaan.'
   },
   {
@@ -52,9 +79,9 @@ export const initialMembers: Member[] = [
     joinDate: '10 November 2023',
     status: 'Aktif',
     photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400',
-    phone: '+62 811-9988-7766',
+    phone: '0823-3262-6916',
     email: 'bambang.suprayogi@teamsenyapnusantara.org',
-    nik: '1271031011890004',
+    nik: '1271************',
     reason: 'Membangun jejaring komunikasi publik dan sosialisasi program TSN.'
   },
   {
@@ -66,9 +93,9 @@ export const initialMembers: Member[] = [
     joinDate: '05 Agustus 2026',
     status: 'Menunggu Verifikasi',
     photoUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400',
-    phone: '+62 812-9900-1122',
-    email: 'ahmad.hidayat@gmail.com',
-    nik: '3509120508980005',
+    phone: '0823-3262-6916',
+    email: 'ahmad.hidayat@teamsenyapnusantara.org',
+    nik: '3509************',
     reason: 'Ingin bergabung menjadi paralegal pendamping di LPKSM Jember.'
   },
   {
@@ -80,9 +107,9 @@ export const initialMembers: Member[] = [
     joinDate: '06 Agustus 2026',
     status: 'Menunggu Verifikasi',
     photoUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400',
-    phone: '+62 857-1122-3344',
-    email: 'dewi.lestari@gmail.com',
-    nik: '3510041204990006',
+    phone: '0823-3262-6916',
+    email: 'dewi.lestari@teamsenyapnusantara.org',
+    nik: '3510************',
     reason: 'Siap diterjunkan pada kegiatan penyaluran sembako & bakti sosial.'
   }
 ];
@@ -240,22 +267,51 @@ export const initialSiteConfig = {
   whatsappNumber: '6282332626916',
   email: 'sekretariat@teamsenyapnusantara.org',
   address: 'Jl. Lumajang - Jember, Kebon, Tutul, Kec. Balung, Kabupaten Jember, Jawa Timur 68161',
-  legalNumber: 'AHU-0004521.AH.01.07.Tahun 2024 / TDLPK: 510/024/Disperindag/2024',
+  legalNumber: 'AHU-0001353.AH.01.07.TAHUN 2026',
   tdlpkNumber: 'No. 510/024/TDLPK/Disperindag/2024',
-  kemenkumhamNumber: 'AHU-0004521.AH.01.07.Tahun 2024',
+  kemenkumhamNumber: 'AHU-0001353.AH.01.07.TAHUN 2026',
   npwpNumber: '14.285.901.4-626.000',
-  ketuaUmumName: 'HERI PRABOWO, S.H.',
-  sekretarisName: 'SITI RAHMAWATI',
-  bendaharaName: 'IBRAHIM (Bendahara Pusat)',
+  ketuaUmumName: 'ACHMAT ATARI',
+  sekretarisName: 'WENDA',
+  bendaharaName: 'IBRAHIM ASEGAF',
   statMembersCount: '500+',
   statProvincesCount: '34',
   statProBonoRate: '100%',
-  aboutTitle: 'PROFIL LPKSM SENYAP NUSANTARA JAYA & TSN',
-  aboutText1: 'Team Senyap Nusantara (TSN) berkolaborasi dengan Lembaga Perlindungan Konsumen Swadaya Masyarakat (LPKSM) Senyap Nusantara Jaya yang berkedudukan hukum di Kabupaten Jember, Jawa Timur. Lembaga ini diakui secara sah oleh Negara Kesatuan Republik Indonesia berdasarkan UU No. 8 Tahun 1999 tentang Perlindungan Konsumen dan PP No. 59 Tahun 2001.',
-  aboutText2: 'Sebagai LPKSM berbadan hukum dan memiliki Tanda Daftar Lembaga Perlindungan Konsumen (TDLPK) resmi Dinas Perindustrian dan Perdagangan, kami menjalankan fungsi pengawasan peredaran barang/jasa, penerimaan pengaduan, konsultasi hak konsumen, mediasi sengketa non-litigasi, serta aksi kemanusiaan dan bakti sosial tanpa dipungut biaya (pro bono) bagi masyarakat prasejahtera.',
-  bankAccountInfo: 'Bank Mandiri: 143-00-1234567-8 a/n LPKSM SENYAP NUSANTARA JAYA',
-  adminUsername: 'admin',
-  adminPin: 'tsn2024',
+  aboutTitle: 'PROFIL SENYAP NUSANTARA JAYA & TEAM SENYAP NUSANTARA',
+  aboutText1: 'SENYAP NUSANTARA JAYA (AHU-0001353.AH.01.07.TAHUN 2026) merupakan Badan Hukum yang secara resmi menaungi komunitas TEAM SENYAP NUSANTARA (TSN), Lembaga Perlindungan Konsumen Team Senyap Nusantara (LPKTSN), serta unit advokasi bantuan hukum YLBH CAKRA.',
+  aboutText2: 'Dengan satu kesatuan kantor operasional, ekosistem organisasi ini mengemban misi kemanusiaan, perlindungan konsumen, advokasi bantuan hukum pro bono, serta pemberdayaan masyarakat di seluruh wilayah Republik Indonesia.',
+  bankAccountInfo: 'Bank Mandiri: 143-00-1234567-8 a/n SENYAP NUSANTARA JAYA',
 };
+
+export const initialLegalAidCases: LegalAidCase[] = [
+  {
+    ticketNumber: 'LPKSM-2026-0042',
+    applicantName: 'Suryadi Pratama',
+    phone: '0812-3456-7890',
+    category: 'Sengketa Konsumen (LPKSM)',
+    location: 'Kec. Balung, Kabupaten Jember',
+    reportedParty: 'PT Mega Finansial Nusantara',
+    businessSector: 'Leasing & Pembiayaan Konsumen',
+    estimatedLoss: 'Rp 14.500.000',
+    description: 'Penarikan sepihak unit kendaraan bermotor di jalan tanpa sertifikat jaminan fidusia dan tanpa putusan pengadilan berkekuatan hukum tetap.',
+    status: 'Mediasi Terjadwal',
+    submittedAt: '2026-08-10',
+    consentPrivacy: true,
+  },
+  {
+    ticketNumber: 'LPKSM-2026-0039',
+    applicantName: 'Nur Hasanah',
+    phone: '0857-8912-3456',
+    category: 'Klausula Baku & Ganti Rugi',
+    location: 'Kabupaten Jember',
+    reportedParty: 'Developer Perumahan Asri Jaya',
+    businessSector: 'Properti & Real Estate',
+    estimatedLoss: 'Rp 28.000.000',
+    description: 'Keterlambatan serah terima sertifikat hak milik (SHM) selama 2 tahun dan pencantuman klausula baku yang sepihak membebaskan denda developer.',
+    status: 'Tim Hukum Ditugaskan',
+    submittedAt: '2026-08-08',
+    consentPrivacy: true,
+  }
+];
 
 
